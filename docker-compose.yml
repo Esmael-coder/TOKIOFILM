@@ -1,0 +1,57 @@
+services:
+  mysql:
+    image: mysql:8.4
+
+    ports:
+      - "3306:3306"
+
+    environment:
+      MYSQL_DATABASE: ${SQL_DATABASE_NAME}
+      MYSQL_ROOT_PASSWORD: ${SQL_DATABASE_PASSWORD}
+      MYSQL_USER: ${SQL_DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${SQL_DATABASE_PASSWORD}
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping --protocol=tcp -h 127.0.0.1 -P 3306 -u$${MYSQL_USER} -p$${MYSQL_PASSWORD} --silent"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+
+    environment:
+      SQL_DATABASE_URL: ${SQL_DATABASE_URL}
+      SQL_DATABASE_USERNAME: ${SQL_DATABASE_USERNAME}
+      SQL_DATABASE_PASSWORD: ${SQL_DATABASE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:alpine
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+
+    depends_on:
+      - app
+
+volumes:
+  mysql_data:

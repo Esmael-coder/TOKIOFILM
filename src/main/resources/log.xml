@@ -1,0 +1,15 @@
+
+<configuration>
+    <apender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>1ogs/app-%d{yyyy-MM-dd}.1og</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder/>
+    </apender>
+    <pattern>%d{УУУУ-MM-dd HH:mm:ss} [%level] %msg%n</pattern>
+        <root level="info">
+    <appender-ref ref="FILE"/>
+        </root>
+</configuration>

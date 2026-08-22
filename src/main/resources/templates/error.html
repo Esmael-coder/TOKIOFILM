@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Erro</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+
+    <div class="card text-center" style="max-width: 650px; width:100%;">
+
+        <div class="card-body p-5">
+
+            <h4 class="mb-3">
+                Ocorreu um erro...
+            </h4>
+
+            <div class="alert alert-danger text-start d-flex flex-column" role="alert">
+                <strong>Status:</strong>
+                <span th:text="${status}">
+                    Status code
+                </span>
+
+                <strong>Erro: </strong>
+                <span th:text="${message}">
+                    Mensagem de erro
+                </span>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+
+                <a th:href="@{/}"
+                   class="btn btn-primary">
+                    <i class="bi bi-house-door-fill"></i>
+                    Página Inicial
+                </a>
+
+                <button onclick="history.back()"
+                        class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i>
+                    Voltar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

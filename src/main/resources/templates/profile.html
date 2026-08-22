@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-pt"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+                    <h3 class="text-center mb-0">O meu perfil</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Mensagem de sucesso -->
+                    <div th:if="${success}"
+                         class="alert alert-success"
+                         th:text="${success}">
+                    </div>
+
+                    <!-- Mensagem de erro -->
+                    <div th:if="${error}"
+                         class="alert alert-danger"
+                         th:text="${error}">
+                    </div>
+
+                    <!-- Foto atual -->
+                    <div class="text-center mb-4">
+
+                        <img th:if="${profilePicture != null
+                                    and !#strings.isEmpty(profilePicture)}"
+                             th:src="@{'/uploads/users/' + ${profilePicture}}"
+                             alt="Foto de perfil"
+                             class="rounded-circle border"
+                             width="140"
+                             height="140"
+                             style="object-fit: cover;">
+
+                        <img th:unless="${profilePicture != null
+                                        and !#strings.isEmpty(profilePicture)}"
+                             th:src="@{/uploads/users/default.jpg}"
+                             alt="Foto de perfil"
+                             class="rounded-circle border"
+                             width="140"
+                             height="140"
+                             style="object-fit: cover;">
+
+                    </div>
+
+                    <form th:action="@{/profile/update}"
+                          th:object="${updateUserDTO}"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        <div class="mb-3">
+
+                            <label for="username" class="form-label">
+                                Username
+                            </label>
+
+                            <input id="username"
+                                   type="text"
+                                   class="form-control"
+                                   th:field="*{username}">
+
+                            <div class="text-danger"
+                                 th:if="${#fields.hasErrors('username')}"
+                                 th:errors="*{username}">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="name" class="form-label">
+                                Nome
+                            </label>
+
+                            <input id="name"
+                                   type="text"
+                                   class="form-control"
+                                   th:field="*{name}">
+
+                            <div class="text-danger"
+                                 th:if="${#fields.hasErrors('name')}"
+                                 th:errors="*{name}">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="surname" class="form-label">
+                                Apelido
+                            </label>
+
+                            <input id="surname"
+                                   type="text"
+                                   class="form-control"
+                                   th:field="*{surname}">
+
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('surname')}"
+                                 th:errors="*{surname}">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="email" class="form-label">
+                                Email
+                            </label>
+
+                            <input id="email"
+                                   type="email"
+                                   class="form-control"
+                                   th:field="*{email}">
+
+                            <div class="text-danger"
+                                 th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="birthDate" class="form-label">
+                                Data de nascimento
+                            </label>
+
+                            <input id="birthDate"
+                                   type="date"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('birthDate')}
+                                   ? 'is-invalid' : ''"
+                                   th:field="*{birthDate}">
+
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('birthDate')}"
+                                 th:errors="*{birthDate}">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label for="profilePicture" class="form-label">
+                                Alterar foto de perfil
+                            </label>
+
+                            <input id="profilePicture"
+                                   type="file"
+                                   class="form-control"
+                                   name="profilePicture">
+
+                            <div class="form-text">
+                                Deixa este campo vazio para manter a foto atual.
+                            </div>
+
+                        </div>
+
+                        <div class="d-grid">
+
+                            <button type="submit" class="btn btn-dark">
+                                Guardar alterações
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

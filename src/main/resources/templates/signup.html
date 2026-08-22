@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-pt" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+    <header th:replace="~{fragments/layout :: header}"></header>
+        <div class="container mt-5">
+
+            <div class="row justify-content-center">
+
+                <div class="col-md-6">
+
+                    <div class="card shadow-sm">
+
+                        <div class="card-header">
+                            <h3 class="text-center">Criar Utilizador</h3>
+                        </div>
+
+                        <div class="card-body">
+
+                            <form th:action="@{/signup}" th:object="${userRegisterDTO}" enctype="multipart/form-data" method="post">
+
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" th:field="*{username}">
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('username')}"
+                                         th:errors="*{username}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" th:field="*{password}">
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('password')}"
+                                         th:errors="*{password}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Nome</label>
+                                    <input type="text" class="form-control" th:field="*{name}">
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('name')}"
+                                         th:errors="*{name}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Apelido</label>
+                                    <input type="text" class="form-control" th:field="*{surname}">
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('surname')}"
+                                         th:errors="*{surname}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" th:field="*{email}">
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('email')}"
+                                         th:errors="*{email}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Data de Nascimento</label>
+                                    <input type="date" class="form-control" th:field="*{birthDate}">
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('birthDate')}"
+                                         th:errors="*{birthDate}">
+                                    </div>
+                                </div>
+
+                                <div sec:authorize="hasAuthority('ADMIN')" class="col-md-6 mb-3">
+                                    <label class="form-label">Role</label>
+                                    <select class="form-select" th:field="*{role}">
+                                        <option value="">Selecione...</option>
+                                        <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+                                    </select>
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('role')}"
+                                         th:errors="*{role}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Foto de Perfil</label>
+                                    <input type="file" class="form-control" name="profilePicture" accept="image/jpeg,image/png,image/webp">
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-dark">
+                                        Guardar
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-pt" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<div class="mt-5 alert alert-success alert-dismissible fade show alert-auto-close"
+     role="alert"
+     th:if="${success}">
+
+    <i class="bi bi-check-circle-fill me-2"></i>
+
+    <span th:text="${success}"></span>
+
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="alert">
+    </button>
+
+</div>
+<div class="container mt-5 mb-5">
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+            <h3 class="mb-0">Registar Filme</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form th:action="@{/films/new}" th:object="${filmDTO}" method="post" enctype="multipart/form-data">
+
+                <!-- TITULO / ANO / DURAÇÃO -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Título</label>
+                        <input type="text" class="form-control" th:field="*{title}">
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('title')}"
+                             th:errors="*{title}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Ano</label>
+                        <input type="number" class="form-control" th:field="*{year}">
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('year')}"
+                             th:errors="*{year}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Duração</label>
+                        <input type="number" class="form-control" th:field="*{duration}">
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('duration')}"
+                             th:errors="*{duration}">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIRECTOR / FOTOGRAFO -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Diretor</label>
+                        <select class="form-select" th:field="*{directorId}">
+                            <option value="">Selecione...</option>
+                            <option th:each="person : ${directors}" th:value="${person.id}" th:text="${person.name + ' ' + person.surname}"></option>
+                        </select>
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('directorId')}"
+                             th:errors="*{directorId}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fotógrafo</label>
+                        <select class="form-select" th:field="*{fotografoId}">
+                            <option value="">Selecione...</option>
+                            <option th:each="person : ${fotografos}" th:value="${person.id}" th:text="${person.name + ' ' + person.surname}"></option>
+                        </select>
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('fotografoId')}"
+                             th:errors="*{fotografoId}">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ACTORES / GUIONISTAS / MUSICOS -->
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Actores</label>
+                        <select multiple size="8" class="form-select" th:field="*{actorsId}">
+
+                            <option th:each="person : ${actors}"
+                                    th:value="${person.id}"
+                                    th:text="${person.name + ' ' + person.surname}">
+                            </option>
+
+                        </select>
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('actorsId')}"
+                             th:errors="*{actorsId}">
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Guionistas</label>
+                        <select multiple size="8" class="form-select" th:field="*{guionistasId}">
+
+                            <option th:each="person : ${guionistas}"
+                                    th:value="${person.id}"
+                                    th:text="${person.name + ' ' + person.surname}">
+                            </option>
+
+                        </select>
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('guionistasId')}"
+                             th:errors="*{guionistasId}">
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Músicos</label>
+                        <select multiple size="8" class="form-select" th:field="*{musicosId}">
+
+                            <option th:each="person : ${musicos}"
+                                    th:value="${person.id}"
+                                    th:text="${person.name + ' ' + person.surname}">
+                            </option>
+
+                        </select>
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('musicosId')}"
+                             th:errors="*{musicosId}">
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- SINOPSE -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">Sinopse</label>
+                    <textarea class="form-control" rows="5" th:field="*{synopsis}"></textarea>
+                    <div class="text-danger"
+                         th:if="${#fields.hasErrors('synopsis')}"
+                         th:errors="*{synopsis}">
+                    </div>
+
+                </div>
+
+                <!-- CARTAZ -->
+
+                <div class="mb-4">
+                    <label class="form-label">Cartaz</label>
+                    <input type="file" class="form-control" name="posterFile" accept="image/jpeg,image/png,image/webp">
+
+                </div>
+
+                <!-- BOTÕES -->
+                <button type="submit" class="btn btn-dark">Guardar Filme</button>
+                <a th:href="@{/}" class="btn btn-secondary">Voltar</a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

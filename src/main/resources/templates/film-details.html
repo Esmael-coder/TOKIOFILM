@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="pt-pt" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<div class="alert alert-success alert-dismissible fade show alert-auto-close"
+     role="alert"
+     th:if="${success}">
+
+    <i class="bi bi-check-circle-fill me-2"></i>
+
+    <span th:text="${success}"></span>
+
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="alert">
+    </button>
+
+</div>
+
+<div class="container py-5">
+
+    <!-- Voltar -->
+    <a th:href="@{/films/search}" class="btn btn-outline-primary mb-4">
+        <i class="bi bi-arrow-left"></i>
+        Voltar
+    </a>
+
+    <div class="row g-5">
+
+        <!-- COLUNA ESQUERDA -->
+        <div class="col-lg-4">
+
+            <img th:src="@{/uploads/films/{file}(file=${film.poster})}"
+                 class="img-fluid rounded shadow w-100 mb-3"
+                 alt="Poster">
+
+            <div class="d-grid gap-2">
+
+                <button class="btn btn-warning">
+                    <i class="bi bi-play-fill"></i>
+                    Ver trailer
+                </button>
+
+                <button class="btn btn-outline-secondary">
+                    <i class="bi bi-share"></i>
+                    Partilhar
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- COLUNA DIREITA -->
+        <div class="col-lg-8">
+
+            <small class="text-uppercase text-secondary">
+                Informações do Filme
+            </small>
+
+            <h1 class="display-3 fw-bold mt-2"
+                th:text="${film.title}">
+            </h1>
+
+            <div class="d-flex gap-4 mb-4 mt-3">
+
+                <span>
+                    <i class="bi bi-calendar"></i>
+                    <span th:text="${film.year}"></span>
+                </span>
+
+                <span>
+                    <i class="bi bi-clock"></i>
+                    <span th:text="${film.duration}"></span> min
+                </span>
+
+            </div>
+
+            <!-- SINOPSE -->
+            <div class="mb-5">
+
+                <h6 class="text-uppercase fw-bold mb-3">
+                    Sinopse
+                </h6>
+
+                <p class="text-secondary"
+                   th:text="${film.synopsis}">
+                </p>
+
+            </div>
+
+            <!-- EQUIPA -->
+            <h6 class="text-uppercase fw-bold mb-4">
+                Equipa
+            </h6>
+
+            <div class="row gy-4">
+
+                <div class="col-md-6">
+                    <small class="text-secondary">Direção</small>
+                    <div>
+                        <span th:text="${film.director.name + ' ' + film.director.surname}"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <small class="text-secondary">Atores</small>
+
+                    <div th:each="actor : ${film.actors}">
+                        <span th:text="${actor.name + ' ' + actor.surname}"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <small class="text-secondary">Guionistas</small>
+
+                    <div th:each="g : ${film.guionistas}">
+                        <span th:text="${g.name + ' ' + g.surname}"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <small class="text-secondary">Músicos</small>
+
+                    <div th:each="m : ${film.musicos}">
+                        <span th:text="${m.name + ' ' + m.surname}"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <small class="text-secondary">
+                        Direção de Fotografia
+                    </small>
+                    <div>
+                        <span th:text="${film.fotografo.name + ' ' + film.fotografo.surname}"></span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- CLASSIFICAÇÃO -->
+            <div th:if="${!isScored}"
+                 class="card mt-5 shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <h5 class="text-uppercase text-secondary">
+                        Classificação
+                    </h5>
+
+                    <h3 class="mb-4">
+                        Qual é a sua nota?
+                    </h3>
+
+                    <form th:action="@{/films/{id}/rate(id=${film.id})}"
+                          method="post"
+                          th:object="${score}">
+
+                        <div class="row g-3 align-items-center">
+
+                            <div class="col-md">
+
+                                <select id="rating"
+                                        class="form-select"
+                                        th:field="*{value}">
+
+                                    <option value="" disabled selected>
+                                        Selecione uma classificação
+                                    </option>
+
+                                    <option th:each="i : ${#numbers.sequence(0,10)}"
+                                            th:value="${i}"
+                                            th:text="${i}">
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-auto">
+
+                                <button class="btn btn-primary">
+                                    <i class="bi bi-bookmark"></i>
+                                    Guardar
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- REVIEW -->
+            <div th:if="${!isReviewed}"
+                 class="card mt-5 shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <h5 class="text-uppercase text-secondary">
+                        Review
+                    </h5>
+
+                    <h3 class="mb-4">
+                        Escreva a sua opinião
+                    </h3>
+
+                    <form th:action="@{/films/{id}/review(id=${film.id})}"
+                          method="post"
+                          th:object="${reviewDTO}">
+
+                        <div class="mb-3">
+
+                            <label for="title" class="form-label">
+                                Título
+                            </label>
+
+                            <input type="text"
+                                   id="title"
+                                   class="form-control"
+                                   th:field="*{title}"
+                                   placeholder="Título da review">
+
+                            <div class="text-danger"
+                                 th:if="${#fields.hasErrors('title')}"
+                                 th:errors="*{title}">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label for="textReview" class="form-label">
+                                Review
+                            </label>
+
+                            <textarea id="textReview"
+                                      class="form-control"
+                                      rows="6"
+                                      th:field="*{textReview}"
+                                      placeholder="Partilhe a sua opinião sobre o filme">
+                            </textarea>
+
+                            <div class="text-danger"
+                                 th:if="${#fields.hasErrors('textReview')}"
+                                 th:errors="*{textReview}">
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                <i class="bi bi-chat-left-text"></i>
+                                Publicar Review
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="card mt-5 shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4">
+                        Avaliações dos utilizadores
+                    </h2>
+
+                    <div class="list-group list-group-flush">
+
+                        <div class="list-group-item px-0"
+                             th:each="score : ${film.scores}">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div class="d-flex align-items-center gap-3">
+
+                                    <img th:src="@{/uploads/users/{file}(file=${score.user.profilePicture})}"
+                                         class="rounded-circle object-fit-cover"
+                                         width="45"
+                                         height="45"
+                                         alt="Foto do utilizador">
+
+                                    <div>
+                                        <h6 class="mb-0"
+                                            th:text="${score.user.username}">
+                                        </h6>
+                                    </div>
+
+                                </div>
+
+                                <span class="badge bg-primary fs-6 px-3 py-2"
+                                      th:text="${score.value}">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- REVIEWS -->
+            <div class="card mt-5 shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4">
+                        Opiniões dos utilizadores
+                    </h2>
+
+                    <div class="list-group list-group-flush">
+
+                        <div class="list-group-item px-0 py-4"
+                             th:each="review : ${film.reviews}">
+
+                            <div class="d-flex align-items-start gap-3">
+
+                                <img th:src="@{/uploads/users/{file}(file=${review.user.profilePicture})}"
+                                     class="rounded-circle object-fit-cover"
+                                     width="50"
+                                     height="50"
+                                     alt="Foto do utilizador">
+
+                                <div class="flex-grow-1">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <h6 class="mb-0"
+                                            th:text="${review.user.username}">
+                                        </h6>
+
+                                        <small class="text-muted"
+                                               th:text="${#temporals.format(review.date, 'dd/MM/yyyy')}">
+                                        </small>
+
+                                    </div>
+
+                                    <h5 class="mt-3 mb-2 fw-bold"
+                                        th:text="${review.title}">
+                                    </h5>
+
+                                    <p class="text-secondary mb-0"
+                                       style="white-space: pre-line;"
+                                       th:text="${review.textReview}">
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="text-center py-4"
+                         th:if="${#lists.isEmpty(film.reviews)}">
+
+                        <i class="bi bi-chat-left-text fs-1 text-secondary"></i>
+
+                        <p class="text-secondary mt-3 mb-0">
+                            Ainda não existem reviews para este filme.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</html>

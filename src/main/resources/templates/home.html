@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="pt-pt" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<div class="alert alert-success alert-dismissible fade show alert-auto-close"
+     role="alert"
+     th:if="${success}">
+
+    <i class="bi bi-check-circle-fill me-2"></i>
+
+    <span th:text="${success}"></span>
+
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="alert">
+    </button>
+
+</div>
+
+<!-- Hero -->
+<section class="bg-body-tertiary border-bottom">
+    <div class="container py-5">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+
+                <span class="badge text-bg-dark mb-3">
+                    TOKIO FILM
+                </span>
+
+                <h1 class="display-3 fw-bold">
+                    Bem-vindo à
+                    <span class="text-warning">TOKIOFILM</span>
+                </h1>
+
+                <p class="lead text-secondary mt-4">
+                    Organize filmes, personagens e utilizadores
+                    numa única plataforma.
+                </p>
+
+                <div class="mt-4 d-flex gap-3">
+
+                    <a href="/films/search"
+                       class="btn btn-dark btn-lg">
+
+                        Explorar catálogo
+                    </a>
+
+                    <a href="/film/new"
+                       class="btn btn-outline-secondary btn-lg">
+
+                        Novo filme
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-5 text-center">
+
+                <i class="bi bi-film display-1 text-warning"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<div class="container py-5">
+
+    <div class="row text-center">
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <h2 th:text="${totalFilms}" class="fw-bold text-dark">
+                        1000
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Filmes catalogados
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <h2 th:text="${totalPersons}" class="fw-bold text-dark">
+                        300
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Personagens
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <h2 th:text="${totalUsers}" class="fw-bold text-dark">
+                        100
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Utilizadores
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h2 class="fw-bold">
+            Tudo o que precisa
+        </h2>
+
+        <p class="text-secondary">
+            Gerencie o catálogo de filmes de forma simples.
+        </p>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="bi bi-search fs-2 text-dark"></i>
+
+                    <h5 class="mt-3">
+                        Pesquisar Filmes
+                    </h5>
+
+                    <p class="text-secondary">
+                        Encontre rapidamente qualquer filme.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="bi bi-film fs-2 text-dark"></i>
+
+                    <h5 class="mt-3">
+                        Novo Filme
+                    </h5>
+
+                    <p class="text-secondary">
+                        Registe filmes completos.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="bi bi-people fs-2 text-dark"></i>
+
+                    <h5 class="mt-3">
+                        Personagens
+                    </h5>
+
+                    <p class="text-secondary">
+                        Crie realizadores, atores e músicos.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <i class="bi bi-person-circle fs-2 text-dark"></i>
+
+                    <h5 class="mt-3">
+                        Utilizadores
+                    </h5>
+
+                    <p class="text-secondary">
+                        Gestão de contas da plataforma.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="container py-5">
+
+    <div class="card shadow border-0">
+
+        <div class="card-body text-center py-5">
+
+            <h2 class="fw-bold">
+
+                Pronto para adicionar o próximo filme?
+
+            </h2>
+
+            <p class="text-secondary mt-3">
+
+                Comece já a construir o catálogo da TOKIOFILM.
+
+            </p>
+
+            <a href="/film/new"
+               class="btn btn-dark btn-lg mt-3">
+
+                Começar agora
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+    <h1 class="text-center">Bem Vindo a TOKIOFILM</h1>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="pt-pt" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+<div class="container mt-5">
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+            <h3 class="mb-0">Registar Personagem</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form th:action="@{/persons/new}" th:object="${personRegisterDTO}" method="post">
+
+                <!-- NOME E APELIDO -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Nome</label>
+                        <input type="text" class="form-control" th:field="*{name}">
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('name')}"
+                             th:errors="*{name}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Apelido</label>
+                        <input type="text" class="form-control" th:field="*{surname}">
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('surname')}"
+                             th:errors="*{surname}">
+                        </div>
+                    </div>
+
+                    <!-- Trabalho-->
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Tipo de trabalho</label>
+                        <select class="form-select" th:field="*{type}">
+
+                            <option th:each="typePerson : ${typePersons}"
+                                    th:value="${typePerson}"
+                                    th:text="${typePerson}">
+                            </option>
+
+                        </select>
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('type')}"
+                             th:errors="*{type}">
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- BOTÕES -->
+                <button type="submit" class="btn btn-dark">Criar Personagem</button>
+                <a th:href="@{/}" class="btn btn-secondary">Voltar</a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</html>
