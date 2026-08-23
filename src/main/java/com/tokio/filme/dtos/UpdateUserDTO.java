@@ -16,13 +16,13 @@ import java.util.Date;
 public class UpdateUserDTO {
 
     @NotBlank(message = "nome obrigatório")
-    @Size(min = 2, max = 8, message = "min 2 e max 8 caracteres")
+    @Size(min = 2, max = 20, message = "min 2 e max 20 caracteres")
     private String username;
 
     @Pattern(regexp = "^[A-Za-zÀ-ÿ]{2,}$", message = "O nome deve conter pelo menos 2 letras e não pode ter espaços ou números")
     private String name;
 
-    @Size(min = 2, max = 8, message = "min 2 e max 8 caracteres")
+    @Size(min = 2, max = 20, message = "min 2 e max 20 caracteres")
     private String surname;
 
     @Email(message = "Email invalido")

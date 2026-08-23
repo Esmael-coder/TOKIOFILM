@@ -18,7 +18,7 @@ public class UserRegisterDTO {
     private Long id;
 
     @NotBlank(message = "nome obrigatório")
-    @Size(min = 2, max = 8, message = "min 2 e max 8 caracteres")
+    @Size(min = 2, max = 20, message = "min 2 e max 20 caracteres")
     private String username;
 
     @Size(min = 6, max = 12, message = "Mínimo 6 e maximo 12")
@@ -27,7 +27,7 @@ public class UserRegisterDTO {
     @Pattern(regexp = "^[A-Za-zÀ-ÿ]{2,}$", message = "O nome deve conter pelo menos 2 letras e não pode ter espaços ou números")
     private String name;
 
-    @Size(min = 2, max = 8, message = "min 2 e max 8 caracteres")
+    @Size(min = 2, max = 20, message = "min 2 e max 20 caracteres")
     private String surname;
 
     @Email(message = "Email invalido")
