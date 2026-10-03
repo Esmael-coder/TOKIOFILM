@@ -1,4 +1,4 @@
-package com.tokio.filme.Batch;
+package com.tokio.filme.batch;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.job.Job;

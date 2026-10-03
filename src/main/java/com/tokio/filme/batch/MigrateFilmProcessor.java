@@ -1,4 +1,4 @@
-package com.tokio.filme.Batch;
+package com.tokio.filme.batch;
 
 import com.tokio.filme.dtos.FilmMigrationDTO;
 import com.tokio.filme.entities.Film;

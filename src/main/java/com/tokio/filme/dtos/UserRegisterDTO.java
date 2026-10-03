@@ -30,7 +30,7 @@ public class UserRegisterDTO {
     @Size(min = 2, max = 20, message = "min 2 e max 20 caracteres")
     private String surname;
 
-    @Email(message = "Email invalido")
+    @NotBlank(message = "insira o email")
     private String email;
 
     private String role;

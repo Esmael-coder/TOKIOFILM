@@ -28,7 +28,7 @@ public class ReviewRestController {
         return ResponseEntity.ok().body(message);
     }
 
-    // devolve uma lista de reviews de um determinado user
+    // devolve uma lista de ‘reviews’ de um determinado docker ‘user’
     @Operation(summary = "Devolve todos os reviews de um user")
     @GetMapping("/api/{userId}/film/review")
     public ResponseEntity<List<RestReviewDTO>> getReviews(@PathVariable Long userId){

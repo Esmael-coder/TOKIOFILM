@@ -27,6 +27,7 @@ public class Person {
 
 
     @Enumerated(EnumType.STRING)
+    @ElementCollection
     @Column(name = "type_persons")
     private Set<TypePerson> types = new HashSet<>();
 

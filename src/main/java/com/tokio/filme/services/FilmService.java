@@ -3,7 +3,6 @@ package com.tokio.filme.services;
 import com.tokio.filme.dtos.FilmDTO;
 import com.tokio.filme.dtos.FilmRegisterDTO;
 import com.tokio.filme.entities.Person;
-import com.tokio.filme.entities.Score;
 import com.tokio.filme.exceptions.SaveException;
 import com.tokio.filme.repositories.PersonRepository;
 import com.tokio.filme.security.AuthenticatedUser;

@@ -50,7 +50,6 @@ public class WebSecurityConfig {
     @Bean
     AuthenticationProvider authenticationProvider (){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(customUserDetailsService);
-
         provider.setPasswordEncoder(passwordEncoder());
 
         return provider;
