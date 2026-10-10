@@ -23,6 +23,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -193,5 +195,17 @@ public class UserService {
 
     public long totalUsers() {
         return userRepository.count();
+    }
+
+    public void updateLastLogin(Long id) throws UserPrincipalNotFoundException {
+
+       User user = userRepository.findById(id)
+               .orElseThrow(()-> {
+                   log.error("Não foi possíve encontrar o utilizador com ID: {}, LastLogin não foi atualizado.", id);
+                   return new UserPrincipalNotFoundException("Não foi possível encontrar o user no database");
+               });
+
+       user.setLastLogin(LocalDateTime.now());
+       userRepository.save(user);
     }
 }

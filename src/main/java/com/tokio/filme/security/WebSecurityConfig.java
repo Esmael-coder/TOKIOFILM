@@ -25,6 +25,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
+    private final CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Bean
     @Order(2)//essa anotacao faz o spring usar essa configuracao customizada sempre que esse metodo for chamado
@@ -36,6 +37,7 @@ public class WebSecurityConfig {
         )
                 .formLogin(login -> login
                         .loginPage("/login")
+                        .successHandler(authenticationSuccessHandler)
                         .defaultSuccessUrl("/", true)
                         .failureUrl("/login?error=true")
                         .permitAll()

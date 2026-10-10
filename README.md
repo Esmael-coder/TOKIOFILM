@@ -14,16 +14,17 @@ filmes e profissionais do cinema, atribuir classificações e publicar reviews.
 ## Funcionalidades
 
 - [x] Registo e autenticação de utilizadores
-- [x] Autenticação da API com JWT
+- [x] Geração e validação de Token com JWT
+- [x] Privilégios de Admin
 - [x] Cadastro de filmes
 - [x] Cadastro de atores, diretores e outros profissionais
 - [x] Pesquisa de filmes
-- [x] Classificação de filmes de 0 a 10
+- [x] Classificação de filmes
 - [x] Publicação de reviews
-- [x] Privilégios de Admin
 - [x] Migração diária de filmes para CSV com Spring Batch
 - [x] Documentação da API com Swagger
 - [x] Execução da aplicação com Docker
+- [ ] Dashboard Admin 
 - [ ] Testes automatizados
 - [ ] Melhorias na interface com react
 - [ ] Deploy da aplicação
